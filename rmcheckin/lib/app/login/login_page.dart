@@ -17,9 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isLoading = false;
   bool _showPassword = false;
   bool _isLoading = false;
-  bool _isFormValid = false;
-  bool _isButtonDisabled = false;
-  final bool _buttonClicked = false;
+
   String errorMessage = '';
   final _formKey = GlobalKey<FormState>();
   final senhaController = TextEditingController();
