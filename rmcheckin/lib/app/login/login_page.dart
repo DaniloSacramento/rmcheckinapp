@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                     validator: (email) {
                       if (email == null || email.isEmpty) {
                         return 'Por favor, insira um e-mail.';
-                      } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailController.text)) {
+                      } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
                         return 'Digite um e-mail correto ';
                       }
                       return null;
@@ -123,11 +123,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextFormField(
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
-                      // labelText: "Senha",
-                      // labelStyle: const TextStyle(
-                      //   color: Colors.black,
-                      // ),
-                      hintText: 'Senha', hintStyle: GoogleFonts.dosis(),
+                      hintText: 'Senha',
+                      hintStyle: GoogleFonts.dosis(),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
                           12.0,
@@ -142,7 +139,6 @@ class _LoginPageState extends State<LoginPage> {
                           });
                         },
                       ),
-
                       filled: true,
                       fillColor: Colors.grey[300],
                       prefixIcon: const Icon(
@@ -217,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
                                     Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => HomePage(),
+                                          builder: (context) => const HomePage(),
                                         ),
                                         (r) => false);
                                   } else {

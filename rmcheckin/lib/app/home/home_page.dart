@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: IndexedStack(
         index: intemSelecionado,
-        children: const [
+        children: [
           // EscalaPage(),
           CheckinPage(),
           PerfilPage(),

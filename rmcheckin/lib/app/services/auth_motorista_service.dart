@@ -21,7 +21,9 @@ Future<bool> login(
       'password': password,
     }),
   );
+  print(response.body);
   if (response.statusCode == 200) {
+    print(response.body);
     await sharedPreferences.setString('data', utf8.decode(response.bodyBytes));
     return true;
   } else {

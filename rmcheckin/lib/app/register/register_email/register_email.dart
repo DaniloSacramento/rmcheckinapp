@@ -13,11 +13,17 @@ class MyPhone extends StatefulWidget {
 
 class _MyPhoneState extends State<MyPhone> {
   TextEditingController telefoneController = TextEditingController();
+  TextEditingController cpfController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   var maskFormatter = MaskTextInputFormatter(
     mask: '(##) #####-####',
     filter: {"#": RegExp(r'[0-9]')},
+    type: MaskAutoCompletionType.lazy,
+  );
+  var maskformaterCpf = MaskTextInputFormatter(
+    mask: '###.###.###.##',
     type: MaskAutoCompletionType.lazy,
   );
 
@@ -29,16 +35,25 @@ class _MyPhoneState extends State<MyPhone> {
           color: Colors.white,
         ),
         backgroundColor: darkBlueColor,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () async {
+            FocusScope.of(context).unfocus();
+            await Future.delayed(const Duration(milliseconds: 200));
+            // ignore: use_build_context_synchronously
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Form(
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Container(
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Text(
@@ -47,11 +62,93 @@ class _MyPhoneState extends State<MyPhone> {
                     textStyle: TextStyle(color: darkBlueColor, fontSize: 26, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
+                ),
+                Text(
+                  "Informe seu numero de CPF",
+                  style: GoogleFonts.dosis(
+                    textStyle: TextStyle(
+                      fontSize: 18,
+                      color: darkBlueColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                TextFormField(
+                  controller: cpfController,
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: [maskformaterCpf],
+                  cursorColor: Colors.black,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Digite um numero de cpf válido';
+                    }
+
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "000.000.000-00",
+                    prefixIcon: const Icon(
+                      Icons.login,
+                      color: Colors.grey,
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey[300],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        12.0,
+                      ),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  "Informe seu email",
+                  style: GoogleFonts.dosis(
+                    textStyle: TextStyle(
+                      fontSize: 18,
+                      color: darkBlueColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                TextFormField(
+                  controller: emailController,
+                  keyboardType: TextInputType.phone,
+                  cursorColor: Colors.black,
+                  validator: (email) {
+                    if (email == null || email.isEmpty) {
+                      return 'Por favor, insira um e-mail.';
+                    } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
+                      return 'Digite um email válido';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "exemplo@exemplo.com",
+                    prefixIcon: const Icon(
+                      Icons.email,
+                      color: Colors.grey,
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey[300],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        12.0,
+                      ),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
                 ),
                 Text(
                   "Informe seu numero de telefone",
@@ -91,7 +188,7 @@ class _MyPhoneState extends State<MyPhone> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Center(
