@@ -14,14 +14,12 @@ class PerfilPage extends StatefulWidget {
 
 class _PerfilPageState extends State<PerfilPage> {
   Motorista? user;
-  _getUser() async {
+  motoristaUser() async {
     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    final result = sharedPreferences.getString("data");
-    if (result != null) {
-      setState(() {
-        user = Motorista.fromMap(jsonDecode(result)["data"]);
-      });
-    }
+    final result = sharedPreferences.getString('data');
+    setState(() {
+      user = Motorista.fromMap(jsonDecode(result!)['data']);
+    });
   }
 
   @override
@@ -29,7 +27,7 @@ class _PerfilPageState extends State<PerfilPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        _getUser();
+        motoristaUser();
       },
     );
   }
@@ -43,23 +41,9 @@ class _PerfilPageState extends State<PerfilPage> {
         ),
         backgroundColor: darkBlueColor,
       ),
-      body: user != null
-          ? Column(
-              children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 170,
-                      child: Image.network(user!.nome), // Use user's foto as the image URL
-                    ),
-                  ],
-                ),
-                // Display other user data as needed
-              ],
-            )
-          : const Center(
-              child: CircularProgressIndicator(), // Show a loading indicator while data is being fetched
-            ),
+      body: Column(
+        children: [Text(user!.cpf)],
+      ),
     );
   }
 }
