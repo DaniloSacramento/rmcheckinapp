@@ -1,24 +1,25 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rmcheckin/app/models/motorista_auth_model.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PerfilPage extends StatefulWidget {
-  const PerfilPage({super.key});
+class CaminhaoPage extends StatefulWidget {
+  const CaminhaoPage({super.key});
 
   @override
-  State<PerfilPage> createState() => _PerfilPageState();
+  State<CaminhaoPage> createState() => _CaminhaoPageState();
 }
 
-class _PerfilPageState extends State<PerfilPage> {
+class _CaminhaoPageState extends State<CaminhaoPage> {
   Motorista? user;
   motoristaUser() async {
     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    final result = sharedPreferences.getString('data');
+    final result = sharedPreferences.getString("data");
     setState(() {
-      user = Motorista.fromMap(jsonDecode(result!)['data']);
+      user = Motorista.fromMap(jsonDecode(result!)["data"]);
     });
   }
 
@@ -36,13 +37,7 @@ class _PerfilPageState extends State<PerfilPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white,
-        ),
-        backgroundColor: darkBlueColor,
-      ),
-      body: Column(
-        children: [Text(user!.cpf)],
+        title: const Text('Detalhes do Motorista'),
       ),
     );
   }

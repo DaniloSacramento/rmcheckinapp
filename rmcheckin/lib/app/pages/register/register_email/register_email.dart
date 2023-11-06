@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:rmcheckin/app/register/register_codigo/register_codigo_page.dart';
+import 'package:rmcheckin/app/pages/register/register_codigo/register_codigo_page.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 
 class MyPhone extends StatefulWidget {

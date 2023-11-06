@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rmcheckin/app/home/pages/checkin_page.dart';
-import 'package:rmcheckin/app/home/pages/config_page.dart';
-import 'package:rmcheckin/app/home/pages/historico_page.dart';
-import 'package:rmcheckin/app/home/pages/perfil_page.dart';
+import 'package:rmcheckin/app/pages/home/pages/checkin_page.dart';
+import 'package:rmcheckin/app/pages/home/pages/config_page.dart';
+import 'package:rmcheckin/app/pages/home/pages/historico_page.dart';
+import 'package:rmcheckin/app/pages/home/pages/perfil_page.dart';
 
 enum InitialHomePage { config, perfil, historico, escala }
 

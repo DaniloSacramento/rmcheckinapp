@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rmcheckin/app/input/input_screen.dart';
+import 'package:rmcheckin/app/pages/input/input_screen.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

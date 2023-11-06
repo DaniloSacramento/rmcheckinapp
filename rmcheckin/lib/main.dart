@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:rmcheckin/app/home/home_page.dart';
-import 'package:rmcheckin/app/input/input_screen.dart';
+import 'package:rmcheckin/app/pages/home/home_page.dart';
+import 'package:rmcheckin/app/pages/input/input_screen.dart';
 import 'package:rmcheckin/app/shared/theme/colors_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

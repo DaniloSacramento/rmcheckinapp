@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rmcheckin/app/esqueci_senha/esqueci_senha_page.dart';
-import 'package:rmcheckin/app/home/home_page.dart';
+import 'package:rmcheckin/app/pages/esqueci_senha/esqueci_senha_page.dart';
+import 'package:rmcheckin/app/pages/home/home_page.dart';
 import 'package:rmcheckin/app/services/auth_motorista_service.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 
