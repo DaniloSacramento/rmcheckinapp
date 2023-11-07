@@ -29,6 +29,7 @@ class VeiculoRedeCard extends StatelessWidget {
               itemCount: motorista.veiculos.length,
               itemBuilder: (context, index) {
                 final veiculo = motorista.veiculos[index];
+                final rede = motorista.redes[index];
                 return ListTile(
                   title: Row(
                     children: [
@@ -44,12 +45,13 @@ class VeiculoRedeCard extends StatelessWidget {
                         children: [
                           Text(veiculo.tipoVeiculo),
                           Text(veiculo.placa),
+                          Text(rede.descricao),
                         ],
                       ),
-                      Spacer(),
+                      const Spacer(),
                       IconButton(
                         onPressed: () {},
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.delete,
                           color: Colors.red,
                         ),

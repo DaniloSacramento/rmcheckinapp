@@ -45,9 +45,18 @@ class _PerfilPageState extends State<PerfilPage> {
           color: Colors.white,
         ),
         backgroundColor: darkBlueColor,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () async {
+            FocusScope.of(context).unfocus();
+            await Future.delayed(const Duration(milliseconds: 200));
+            // ignore: use_build_context_synchronously
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -106,7 +115,7 @@ class _PerfilPageState extends State<PerfilPage> {
                       ),
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     'Dados do caminhao',
                     style: TextStyle(color: Colors.black),
                   ),
@@ -226,15 +235,18 @@ class _PerfilPageState extends State<PerfilPage> {
               height: telaHeight * 0.05,
             ),
             Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: yellowColor,
-                  minimumSize: const Size(double.infinity, 50), // Largura total e altura mínima
+              child: Padding(
+                padding: const EdgeInsets.only(left: 0, right: 0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: yellowColor,
+                    minimumSize: const Size(double.infinity, 50), // Largura total e altura mínima
+                  ),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AlterarDadosPage()));
+                  },
+                  child: const Text('Já tenho conta'),
                 ),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AlterarDadosPage()));
-                },
-                child: Text('Já tenho conta'),
               ),
             )
           ],

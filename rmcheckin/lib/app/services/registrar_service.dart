@@ -4,13 +4,8 @@ import 'package:rmcheckin/app/const/const.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-Future<bool> login(
-  String email,
-  String password,
-  // String telefone,
-) async {
-  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  var url = Uri.parse(ConstsApi.motoristaAuth);
+Future<bool> registrarUser({required String cpf, required String email, required String telefone}) async {
+  var url = Uri.parse(ConstsApi.registrarUser);
   var response = await http.post(
     url,
     headers: <String, String>{
@@ -19,18 +14,16 @@ Future<bool> login(
     },
     body: jsonEncode(<String, String>{
       'email': email,
-      'password': password,
-      // 'telefone': telefone,
-      // 'cpf': cpf,
-      // 'telefone': telefone,
+      'cpf': cpf,
+      'telefone': telefone,
     }),
   );
-  print(response.body);
   if (response.statusCode == 200) {
-    print(response.body);
-    await sharedPreferences.setString("data", utf8.decode(response.bodyBytes));
+    final responseData = jsonDecode(response.body);
+    print('Deu tudo certo no cadastro');
     return true;
   } else {
+    print('Erro na chamada da API: ${response.statusCode}');
     return false;
   }
 }

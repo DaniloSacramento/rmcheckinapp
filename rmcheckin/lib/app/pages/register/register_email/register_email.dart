@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:rmcheckin/app/pages/register/register_codigo/register_codigo_page.dart';
+import 'package:rmcheckin/app/pages/register/register_data/teste.dart';
+import 'package:rmcheckin/app/services/registrar_service.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 
 class MyPhone extends StatefulWidget {
@@ -12,6 +14,35 @@ class MyPhone extends StatefulWidget {
 }
 
 class _MyPhoneState extends State<MyPhone> {
+  bool isCPFValid(String cpf) {
+    if (cpf == null || cpf.isEmpty) {
+      return false;
+    }
+    cpf = cpf.replaceAll(RegExp(r'[^0-9]'), '');
+
+    if (cpf.length != 11) {
+      return false;
+    }
+    if (cpf.runes.toSet().length == 1) {
+      return false;
+    }
+    int soma = 0;
+    for (int i = 0; i < 9; i++) {
+      soma += int.parse(cpf[i]) * (10 - i);
+    }
+    int primeiroDigito = (soma * 10) % 11;
+
+    if (primeiroDigito != int.parse(cpf[9])) {
+      return false;
+    }
+    soma = 0;
+    for (int i = 0; i < 10; i++) {
+      soma += int.parse(cpf[i]) * (11 - i);
+    }
+    int segundoDigito = (soma * 10) % 11;
+    return segundoDigito == int.parse(cpf[10]);
+  }
+
   TextEditingController telefoneController = TextEditingController();
   TextEditingController cpfController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -85,9 +116,11 @@ class _MyPhoneState extends State<MyPhone> {
                   cursorColor: Colors.black,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Digite um numero de cpf válido';
+                      return 'Digite um CPF válido';
                     }
-
+                    if (!isCPFValid(value)) {
+                      return 'CPF inválido';
+                    }
                     return null;
                   },
                   decoration: InputDecoration(
@@ -147,7 +180,7 @@ class _MyPhoneState extends State<MyPhone> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 Text(
@@ -204,17 +237,27 @@ class _MyPhoneState extends State<MyPhone> {
                             setState(() {
                               isLoading = true;
                             });
-                            setState(() {
-                              isLoading = false;
-                            });
 
                             if (_formKey.currentState!.validate()) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RegisterCodigo(),
-                                ),
+                              final success = await registrarUser(
+                                cpf: cpfController.text,
+                                email: emailController.text,
+                                telefone: telefoneController.text,
                               );
+                              setState(() {
+                                isLoading = false;
+                              });
+                              if (success) {
+                                // ignore: use_build_context_synchronously
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Teste(),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
                             }
                           },
                     child: isLoading
@@ -238,3 +281,11 @@ class _MyPhoneState extends State<MyPhone> {
     );
   }
 }
+
+final snackBar = const SnackBar(
+  content: Text(
+    'Algo deu errado, revise seus dados cadastrais',
+    textAlign: TextAlign.center,
+  ),
+  backgroundColor: Colors.red,
+);
