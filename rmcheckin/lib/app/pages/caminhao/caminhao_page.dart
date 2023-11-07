@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:rmcheckin/app/models/motorista_auth_model.dart';
+import 'package:rmcheckin/app/pages/caminhao/teste.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +15,7 @@ class CaminhaoPage extends StatefulWidget {
 
 class _CaminhaoPageState extends State<CaminhaoPage> {
   Motorista? user;
+
   motoristaUser() async {
     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     final result = sharedPreferences.getString("data");
@@ -37,8 +38,14 @@ class _CaminhaoPageState extends State<CaminhaoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalhes do Motorista'),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+        backgroundColor: darkBlueColor,
       ),
+      body: user != null
+          ? VeiculoRedeCard(motorista: user!)
+          : const CircularProgressIndicator(), // Você pode mostrar um indicador de carregamento enquanto os dados estão sendo buscados.
     );
   }
 }

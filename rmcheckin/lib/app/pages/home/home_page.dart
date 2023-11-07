@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: IndexedStack(
         index: intemSelecionado,
-        children: [
+        children: const [
           // EscalaPage(),
           CheckinPage(),
           PerfilPage(),
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: "Escala",
+            label: "Checkin",
           ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Perfil"),
           BottomNavigationBarItem(icon: Icon(Icons.history), label: "Historico"),

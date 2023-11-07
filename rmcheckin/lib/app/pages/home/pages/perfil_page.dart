@@ -93,7 +93,11 @@ class _PerfilPageState extends State<PerfilPage> {
                     textStyle: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: darkBlueColor),
                   ),
                 ),
-                TextButton(
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: yellowColor,
+                    // Largura total e altura mínima
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -104,7 +108,7 @@ class _PerfilPageState extends State<PerfilPage> {
                   },
                   child: Text(
                     'Dados do caminhao',
-                    style: TextStyle(color: yellowColor),
+                    style: TextStyle(color: Colors.black),
                   ),
                 )
               ],
