@@ -252,7 +252,7 @@ class _MyPhoneState extends State<MyPhone> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const Teste(),
+                                    builder: (context) => const RegisterCodigo(),
                                   ),
                                 );
                               } else {

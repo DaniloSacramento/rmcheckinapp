@@ -46,11 +46,11 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Text(
-              "Informe o codigo que \nvocê recebeu no whatsapp",
+              "Informe o codigo que \nvocê recebeu por sms",
               style: GoogleFonts.dosis(
                 textStyle: TextStyle(
                   color: darkBlueColor,
