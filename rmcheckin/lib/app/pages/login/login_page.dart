@@ -140,136 +140,42 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: telaHeight * 0.02,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15),
-                  child: ValueListenableBuilder(
-                    valueListenable: dropValue,
-                    builder: (BuildContext context, String value, _) {
-                      return DropdownButtonFormField<String>(
-                        isExpanded: true,
-                        hint: const Text("Selecione a forma de login"),
-                        value: (value.isEmpty) ? null : value,
-                        onChanged: (escolha) {
-                          dropValue.value = escolha.toString();
 
-                          setState(() {
-                            showEmailField = escolha == 'E-mail';
-                            showTelefoneField = escolha == 'Telefone';
-                            showCpfField = escolha == 'CPF';
-                          });
-                        },
-                        items: dropOpcoes
-                            .map((op) => DropdownMenuItem(
-                                  value: op,
-                                  child: Text(op),
-                                ))
-                            .toList(),
-                      );
+                // Campo de E-mail
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+                  child: TextFormField(
+                    cursorColor: Colors.black,
+                    decoration: InputDecoration(
+                      hintText: 'E-mail',
+                      hintStyle: GoogleFonts.dosis(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                          12.0,
+                        ),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[300],
+                      prefixIcon: const Icon(
+                        Icons.email,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (email) {
+                      if (email == null || email.isEmpty) {
+                        return 'Por favor, insira um e-mail.';
+                      } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
+                        return 'Digite um e-mail correto ';
+                      }
+                      return null;
                     },
                   ),
                 ),
-                // Campo de E-mail
-                if (showEmailField)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-                    child: TextFormField(
-                      cursorColor: Colors.black,
-                      decoration: InputDecoration(
-                        hintText: 'E-mail',
-                        hintStyle: GoogleFonts.dosis(),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            12.0,
-                          ),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[300],
-                        prefixIcon: const Icon(
-                          Icons.email,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (email) {
-                        if (email == null || email.isEmpty) {
-                          return 'Por favor, insira um e-mail.';
-                        } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
-                          return 'Digite um e-mail correto ';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
 
-                if (showTelefoneField)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-                    child: TextFormField(
-                      controller: telefoneController,
-                      keyboardType: TextInputType.phone,
-                      inputFormatters: [maskFormatter],
-                      cursorColor: Colors.black,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Digite um numero de telefone válido';
-                        }
-
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        hintText: "(00) 00000-0000",
-                        prefixIcon: const Icon(
-                          Icons.phone,
-                          color: Colors.grey,
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[300],
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            12.0,
-                          ),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
-                  ),
-                // Campo de CPF
-                if (showCpfField)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-                    child: TextFormField(
-                      controller: cpfController,
-                      keyboardType: TextInputType.phone,
-                      inputFormatters: [maskformaterCpf],
-                      cursorColor: Colors.black,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Digite um CPF válido';
-                        }
-                        if (!isCPFValid(value)) {
-                          return 'CPF inválido';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        hintText: "000.000.000-00",
-                        prefixIcon: const Icon(
-                          Icons.login,
-                          color: Colors.grey,
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[300],
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            12.0,
-                          ),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
-                  ),
                 // Campo de Senha
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 10, right: 10),

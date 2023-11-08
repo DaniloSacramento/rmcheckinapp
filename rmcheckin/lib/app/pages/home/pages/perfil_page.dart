@@ -245,7 +245,7 @@ class _PerfilPageState extends State<PerfilPage> {
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const AlterarDadosPage()));
                   },
-                  child: const Text('Já tenho conta'),
+                  child: const Text('Alterar dados'),
                 ),
               ),
             )

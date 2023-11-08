@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rmcheckin/app/pages/alterar_senha/alterar_senha.dart';
 import 'package:rmcheckin/app/pages/input/input_screen.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ConfigPage extends StatelessWidget {
+class ConfigPage extends StatefulWidget {
   const ConfigPage({super.key});
+
+  @override
+  State<ConfigPage> createState() => _ConfigPageState();
+}
+
+class _ConfigPageState extends State<ConfigPage> {
   Future<void> _showExitConfirmationDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -81,6 +88,7 @@ class ConfigPage extends StatelessWidget {
     );
   }
 
+  bool isSwitched = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,6 +106,97 @@ class ConfigPage extends StatelessWidget {
         child: const Icon(
           Icons.logout,
           color: Colors.white,
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            Text(
+              "Notificações",
+              style: GoogleFonts.dosis(
+                textStyle: TextStyle(
+                  color: darkBlueColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Perfimitir notificações na tela bloqueada',
+                  style: GoogleFonts.dosis(
+                    textStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 30,
+                  child: Expanded(
+                    child: Switch(
+                      value: isSwitched,
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            isSwitched = value;
+                          },
+                        );
+                      },
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 0),
+              child: Text(
+                'Acesso',
+                style: GoogleFonts.dosis(
+                  textStyle: TextStyle(
+                    color: darkBlueColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 18.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 0, right: 0),
+                    child: SizedBox(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(backgroundColor: yellowColor, minimumSize: const Size(double.infinity, 50)),
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const AlterarSenha()));
+                          },
+                          child: Text(
+                            'Alterar senha',
+                            style: GoogleFonts.dosis(
+                              textStyle: const TextStyle(color: Colors.black, fontSize: 17),
+                            ),
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

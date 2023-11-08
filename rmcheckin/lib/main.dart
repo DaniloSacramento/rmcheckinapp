@@ -7,7 +7,6 @@ import 'package:rmcheckin/app/shared/theme/colors_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   final bool hasUser = await verificarUser();
   runApp(
     MyApp(hasUser: hasUser),
