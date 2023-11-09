@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:rmcheckin/app/pages/register/register_codigo/register_codigo_page.dart';
-import 'package:rmcheckin/app/pages/register/register_data/teste.dart';
+import 'package:rmcheckin/app/pages/register/register_auth/auth.dart';
 import 'package:rmcheckin/app/services/registrar_service.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 
@@ -252,7 +252,11 @@ class _MyPhoneState extends State<MyPhone> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const RegisterCodigo(),
+                                    builder: (context) => Auth(
+                                      cpf: cpfController.text,
+                                      email: emailController.text,
+                                      telefone: telefoneController.text,
+                                    ),
                                   ),
                                 );
                               } else {

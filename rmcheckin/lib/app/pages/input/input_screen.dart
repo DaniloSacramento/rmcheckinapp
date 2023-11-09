@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rmcheckin/app/pages/login/login_page.dart';
-import 'package:rmcheckin/app/pages/register/register_email/register_email.dart';
+import 'package:rmcheckin/app/pages/register/register_dados/register_dados.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 
 class InputScreen extends StatefulWidget {

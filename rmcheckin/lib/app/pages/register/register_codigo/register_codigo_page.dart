@@ -1,10 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
+
 import 'package:rmcheckin/app/widget/app_color.dart';
 
 class RegisterCodigo extends StatefulWidget {
-  const RegisterCodigo({super.key});
+  final String telefone;
+  const RegisterCodigo({
+    Key? key,
+    required this.telefone,
+  }) : super(key: key);
 
   @override
   State<RegisterCodigo> createState() => _RegisterCodigoState();
@@ -12,6 +18,8 @@ class RegisterCodigo extends StatefulWidget {
 
 class _RegisterCodigoState extends State<RegisterCodigo> {
   bool isLoading = false;
+  bool isCodeComplete = false;
+
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -68,6 +76,11 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
               focusedPinTheme: focusedPinTheme,
               submittedPinTheme: submittedPinTheme,
               showCursor: true,
+              onChanged: (code) {
+                setState(() {
+                  isCodeComplete = code.length == 6;
+                });
+              },
               // onCompleted: (pin) => print(pin),
             ),
             Row(
@@ -85,15 +98,19 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
               height: 10,
             ),
             Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: yellowColor,
-                  minimumSize: const Size(double.infinity, 50),
-                ),
-                onPressed: () {},
-                child: Text('Continuar'),
-              ),
-            )
+              child: isCodeComplete
+                  ? ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: yellowColor,
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      onPressed: () {
+                        // Adicione a lógica que deve ser executada quando o botão for pressionado
+                      },
+                      child: Text('Continuar'),
+                    )
+                  : Container(), // Container vazio quando o código não está completo
+            ),
           ],
         ),
       ),
