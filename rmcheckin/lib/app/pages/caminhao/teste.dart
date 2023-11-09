@@ -7,7 +7,7 @@ import '../../widget/app_color.dart';
 class VeiculoRedeCard extends StatelessWidget {
   final Motorista motorista;
 
-  VeiculoRedeCard({required this.motorista});
+  const VeiculoRedeCard({super.key, required this.motorista});
 
   @override
   Widget build(BuildContext context) {
