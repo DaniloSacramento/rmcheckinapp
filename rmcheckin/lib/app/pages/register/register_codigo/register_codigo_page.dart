@@ -5,7 +5,6 @@ import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rmcheckin/app/pages/register/register_dados/register_dados.dart';
 import 'package:rmcheckin/app/pages/register/register_data/register_data.dart';
-
 import 'package:rmcheckin/app/widget/app_color.dart';
 
 class RegisterCodigo extends StatefulWidget {
@@ -119,7 +118,7 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
               children: [
                 TextButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyPhone()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const MyPhone()));
                   },
                   child: const Text('Editar numero de telefone?'),
                 ),
@@ -152,7 +151,12 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
                         minimumSize: const Size(double.infinity, 50),
                       ),
                       onPressed: () {
-                        // Adicione a lógica que deve ser executada quando o botão for pressionado
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterData(),
+                          ),
+                        );
                       },
                       child: const Text('Continuar'),
                     )
