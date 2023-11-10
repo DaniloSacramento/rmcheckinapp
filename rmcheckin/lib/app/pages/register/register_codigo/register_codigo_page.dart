@@ -1,7 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:pinput/pinput.dart';
+import 'package:rmcheckin/app/pages/register/register_dados/register_dados.dart';
+import 'package:rmcheckin/app/pages/register/register_data/register_data.dart';
 
 import 'package:rmcheckin/app/widget/app_color.dart';
 
@@ -19,7 +22,7 @@ class RegisterCodigo extends StatefulWidget {
 class _RegisterCodigoState extends State<RegisterCodigo> {
   bool isLoading = false;
   bool isCodeComplete = false;
-
+  OtpTimerButtonController controller = OtpTimerButtonController();
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -67,7 +70,32 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  'Numero: ',
+                  style: GoogleFonts.dosis(
+                    textStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Text(
+                  '*' * (widget.telefone.length - 4) + widget.telefone.substring(widget.telefone.length - 4),
+                  style: GoogleFonts.dosis(
+                    textStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
               height: 40,
             ),
             Pinput(
@@ -83,19 +111,38 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
               },
               // onCompleted: (pin) => print(pin),
             ),
+            const SizedBox(
+              height: 15,
+            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyPhone()));
                   },
-                  child: Text('Editar numero de telefone?'),
+                  child: const Text('Editar numero de telefone?'),
                 ),
+                OtpTimerButton(
+                  backgroundColor: yellowColor,
+                  controller: controller,
+                  onPressed: () {},
+                  duration: 60,
+                  text: Text(
+                    'Reenviar codigo',
+                    style: GoogleFonts.dosis(
+                      textStyle: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
-            SizedBox(
-              height: 10,
+            const SizedBox(
+              height: 100,
             ),
             Center(
               child: isCodeComplete
@@ -107,7 +154,7 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
                       onPressed: () {
                         // Adicione a lógica que deve ser executada quando o botão for pressionado
                       },
-                      child: Text('Continuar'),
+                      child: const Text('Continuar'),
                     )
                   : Container(), // Container vazio quando o código não está completo
             ),

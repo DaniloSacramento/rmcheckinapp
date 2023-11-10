@@ -64,6 +64,7 @@ class _PerfilPageState extends State<PerfilPage> {
               height: telaHeight * 0.02,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +75,15 @@ class _PerfilPageState extends State<PerfilPage> {
                       child: CachedNetworkImage(
                         imageUrl: user!.foto,
                         placeholder: (context, url) => const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => const Icon(Icons.camera),
+                        errorWidget: (context, url, error) => Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('assets/user.png'), // Substitua pelo caminho da imagem padrão desejada
+                            ),
+                          ),
+                        ),
                         imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
