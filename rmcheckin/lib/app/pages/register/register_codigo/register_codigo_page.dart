@@ -22,6 +22,12 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
   bool isLoading = false;
   bool isCodeComplete = false;
   OtpTimerButtonController controller = OtpTimerButtonController();
+
+  String maskPhoneNumber(String phoneNumber) {
+    // Adiciona o DDD entre parênteses e mantém os dois últimos dígitos visíveis
+    return '${phoneNumber.substring(0, 4)} ****' + phoneNumber.substring(phoneNumber.length - 2);
+  }
+
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -84,7 +90,7 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
                   ),
                 ),
                 Text(
-                  '*' * (widget.telefone.length - 4) + widget.telefone.substring(widget.telefone.length - 4),
+                  maskPhoneNumber(widget.telefone),
                   style: GoogleFonts.dosis(
                     textStyle: const TextStyle(
                       color: Colors.grey,

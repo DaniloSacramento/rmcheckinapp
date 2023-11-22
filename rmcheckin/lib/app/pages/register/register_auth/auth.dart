@@ -32,6 +32,19 @@ class _AuthState extends State<Auth> {
     });
   }
 
+  String maskEmail(String email) {
+    int atIndex = email.indexOf('@');
+    String username = email.substring(0, 3);
+    String domain = email.substring(atIndex);
+    String maskedUsername = username + '*' * (email.length - atIndex - 3);
+    return maskedUsername + domain;
+  }
+
+  String maskPhoneNumber(String phoneNumber) {
+    // Adiciona o DDD entre parênteses e mantém os dois últimos dígitos visíveis
+    return '${phoneNumber.substring(0, 4)} ****' + phoneNumber.substring(phoneNumber.length - 2);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +105,7 @@ class _AuthState extends State<Auth> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: Text(
-                        '*' * (widget.telefone.length - 4) + widget.telefone.substring(widget.telefone.length - 4),
+                        maskPhoneNumber(widget.telefone),
                         style: GoogleFonts.dosis(
                           textStyle: TextStyle(color: darkBlueColor, fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -139,7 +152,7 @@ class _AuthState extends State<Auth> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: Text(
-                        widget.email.substring(0, 5) + '*' * (widget.email.length - 5),
+                        maskEmail(widget.email),
                         style: GoogleFonts.dosis(
                           textStyle: TextStyle(color: darkBlueColor, fontSize: 20, fontWeight: FontWeight.bold),
                         ),
