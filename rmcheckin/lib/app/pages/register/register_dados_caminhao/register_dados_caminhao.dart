@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rmcheckin/app/pages/register/register_dados_caminhao/register_dados_caminhao.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 
-class RegisterData extends StatefulWidget {
-  const RegisterData({super.key});
+class RegisterDadosCaminhao extends StatefulWidget {
+  const RegisterDadosCaminhao({super.key});
 
   @override
-  State<RegisterData> createState() => _RegisterDataState();
+  State<RegisterDadosCaminhao> createState() => _RegisterDadosCaminhaoState();
 }
 
-class _RegisterDataState extends State<RegisterData> {
+class _RegisterDadosCaminhaoState extends State<RegisterDadosCaminhao> {
+  var maskFormatter = MaskTextInputFormatter(
+    mask: '###-####', // Use '#' para representar dígitos
+    filter: {'#': RegExp(r'[A-Z0-9]')}, // Aceita apenas letras maiúsculas e números
+  );
   bool _showPassword = false;
+
   final TextEditingController nameInputController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+
   TextEditingController confirmarSenha = TextEditingController();
+
   TextEditingController suaSenha = TextEditingController();
+
   String? _validatePasswordMatch(String value) {
     if (value != suaSenha.text) {
       return 'As senhas não coincidem';
@@ -24,6 +33,7 @@ class _RegisterDataState extends State<RegisterData> {
   }
 
   bool isLoading = false;
+
   bool validarSenha(String senha) {
     if (senha.length < 6) {
       return false;
@@ -69,22 +79,22 @@ class _RegisterDataState extends State<RegisterData> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Text(
-                'Vamos continua o seu login',
+                'Dados do caminhao',
                 style: GoogleFonts.dosis(
                   textStyle: TextStyle(color: darkBlueColor, fontSize: 26, fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 2.0),
                 child: Text(
-                  'Nome',
+                  'Placa do caminhao',
                   style: GoogleFonts.dosis(
                     textStyle: TextStyle(
                       fontSize: 18,
@@ -96,15 +106,10 @@ class _RegisterDataState extends State<RegisterData> {
               ),
               TextFormField(
                 controller: nameInputController,
+                inputFormatters: [maskFormatter],
                 cursorColor: Colors.black,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Digite um nome válido';
-                  }
-                  return null;
-                },
                 decoration: InputDecoration(
-                  hintText: "Digite aqui o seu nome completo",
+                  hintText: "Digite a placa do caminhao",
                   filled: true,
                   fillColor: Colors.grey[300],
                   border: OutlineInputBorder(
