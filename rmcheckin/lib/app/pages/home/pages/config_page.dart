@@ -138,22 +138,14 @@ class _ConfigPageState extends State<ConfigPage> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 30,
-                  child: Expanded(
-                    child: Switch(
-                      value: isSwitched,
-                      onChanged: (value) {
-                        setState(
-                          () {
-                            isSwitched = value;
-                          },
-                        );
-                      },
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                  ),
-                )
+                Checkbox(
+                  value: isSwitched,
+                  onChanged: (value) {
+                    setState(() {
+                      isSwitched = value!;
+                    });
+                  },
+                ),
               ],
             ),
             const SizedBox(
