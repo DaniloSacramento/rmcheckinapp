@@ -196,7 +196,12 @@ class _RegisterDadosCaminhaoState extends State<RegisterDadosCaminhao> {
                       onPressed: isLoading
                           ? null
                           : () async {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => FotoMotorista()));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const FotoMotorista(),
+                                ),
+                              );
                             },
                       child: isLoading
                           ? const CircularProgressIndicator() // Mostrar indicador de carregamento
