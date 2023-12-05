@@ -66,6 +66,12 @@ class _MyPhoneState extends State<MyPhone> {
           color: Colors.white,
         ),
         backgroundColor: darkBlueColor,
+        title: Image.asset(
+          'assets/Captura de tela 2023-09-19 181800.png',
+          fit: BoxFit.contain,
+          height: 62,
+        ),
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () async {
@@ -139,7 +145,7 @@ class _MyPhoneState extends State<MyPhone> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 Text(
@@ -230,51 +236,30 @@ class _MyPhoneState extends State<MyPhone> {
                       backgroundColor: yellowColor,
                       minimumSize: const Size(double.infinity, 50),
                     ),
-                    onPressed: isLoading
-                        ? null
-                        : () async {
-                            FocusScope.of(context).unfocus();
-                            setState(() {
-                              isLoading = true;
-                            });
-
-                            if (_formKey.currentState!.validate()) {
-                              final success = await registrarUser(
-                                cpf: cpfController.text,
-                                email: emailController.text,
-                                telefone: telefoneController.text,
-                              );
-                              setState(() {
-                                isLoading = false;
-                              });
-                              if (success) {
-                                // ignore: use_build_context_synchronously
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Auth(
-                                      cpf: cpfController.text,
-                                      email: emailController.text,
-                                      telefone: telefoneController.text,
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                              }
-                            }
-                          },
-                    child: isLoading
-                        ? const CircularProgressIndicator() // Mostrar indicador de carregamento
-                        : Text(
-                            'Continuar',
-                            style: GoogleFonts.dosis(
-                              textStyle: const TextStyle(
-                                fontSize: 17,
-                                color: Colors.black,
-                              ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Auth(
+                              cpf: cpfController.text,
+                              email: emailController.text,
+                              telefone: telefoneController.text,
+                              tipoValidacao: '',
                             ),
                           ),
+                        );
+                      }
+                    },
+                    child: Text(
+                      'Continuar',
+                      style: GoogleFonts.dosis(
+                        textStyle: const TextStyle(
+                          fontSize: 17,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
                 )
               ],
@@ -286,7 +271,7 @@ class _MyPhoneState extends State<MyPhone> {
   }
 }
 
-final snackBar = const SnackBar(
+const snackBar = SnackBar(
   content: Text(
     'Algo deu errado, revise seus dados cadastrais',
     textAlign: TextAlign.center,

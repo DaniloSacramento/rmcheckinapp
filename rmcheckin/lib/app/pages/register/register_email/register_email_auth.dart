@@ -28,6 +28,11 @@ class _RegisterEmailAuthState extends State<RegisterEmailAuth> {
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
+        title: Image.asset(
+          'assets/Captura de tela 2023-09-19 181800.png',
+          fit: BoxFit.contain,
+          height: 62,
+        ),
         centerTitle: true,
       ),
       body: Container(

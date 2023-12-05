@@ -102,6 +102,12 @@ class _LoginPageState extends State<LoginPage> {
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
+        title: Image.asset(
+          'assets/Captura de tela 2023-09-19 181800.png',
+          fit: BoxFit.contain,
+          height: 62,
+        ),
+        centerTitle: true,
         backgroundColor: darkBlueColor,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

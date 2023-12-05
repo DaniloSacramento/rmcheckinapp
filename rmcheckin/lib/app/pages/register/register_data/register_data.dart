@@ -60,6 +60,11 @@ class _RegisterDataState extends State<RegisterData> {
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
+        title: Image.asset(
+          'assets/Captura de tela 2023-09-19 181800.png',
+          fit: BoxFit.contain,
+          height: 62,
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -233,7 +238,12 @@ class _RegisterDataState extends State<RegisterData> {
                     onPressed: isLoading
                         ? null
                         : () async {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterDadosCaminhao()));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RegisterDadosCaminhao(),
+                              ),
+                            );
                           },
                     child: isLoading
                         ? const CircularProgressIndicator() // Mostrar indicador de carregamento

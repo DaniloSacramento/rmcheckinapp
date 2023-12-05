@@ -20,6 +20,12 @@ class _FotoMotoristaState extends State<FotoMotorista> {
           color: Colors.white,
         ),
         backgroundColor: darkBlueColor,
+        title: Image.asset(
+          'assets/Captura de tela 2023-09-19 181800.png',
+          fit: BoxFit.contain,
+          height: 62,
+        ),
+        centerTitle: true,
       ),
       body: Container(
         color: Colors.white,

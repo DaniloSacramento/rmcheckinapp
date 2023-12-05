@@ -4,18 +4,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rmcheckin/app/pages/login/login_page.dart';
 import 'package:rmcheckin/app/pages/register/register_codigo/register_codigo_page.dart';
 import 'package:rmcheckin/app/pages/register/register_email/register_email_auth.dart';
-
+import 'package:rmcheckin/app/services/registrar_service.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 
 class Auth extends StatefulWidget {
   final String cpf;
   final String email;
   final String telefone;
+  final String tipoValidacao;
   const Auth({
     Key? key,
     required this.cpf,
     required this.email,
     required this.telefone,
+    required this.tipoValidacao,
   }) : super(key: key);
 
   @override
@@ -23,12 +25,12 @@ class Auth extends StatefulWidget {
 }
 
 class _AuthState extends State<Auth> {
-  bool primeiroValor = false;
-  bool segundoValor = false;
+  bool primeiroItem = false;
+  bool segundoItem = false;
   double opacity = 0.0;
   void desmarcarPrimeiroCheckbox() {
     setState(() {
-      primeiroValor = false;
+      primeiroItem = false;
     });
   }
 
@@ -41,8 +43,7 @@ class _AuthState extends State<Auth> {
   }
 
   String maskPhoneNumber(String phoneNumber) {
-    // Adiciona o DDD entre parênteses e mantém os dois últimos dígitos visíveis
-    return '${phoneNumber.substring(0, 4)} ****' + phoneNumber.substring(phoneNumber.length - 2);
+    return '${phoneNumber.substring(0, 4)} ****${phoneNumber.substring(phoneNumber.length - 2)}';
   }
 
   @override
@@ -53,6 +54,12 @@ class _AuthState extends State<Auth> {
           color: Colors.white,
         ),
         backgroundColor: darkBlueColor,
+        title: Image.asset(
+          'assets/Captura de tela 2023-09-19 181800.png',
+          fit: BoxFit.contain,
+          height: 62,
+        ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -74,12 +81,12 @@ class _AuthState extends State<Auth> {
             Row(
               children: [
                 Checkbox(
-                  value: primeiroValor,
+                  value: primeiroItem,
                   onChanged: (value) {
                     setState(() {
-                      primeiroValor = value!;
-                      if (value!) {
-                        segundoValor = false; // Desmarca o segundo checkbox se o primeiro for marcado
+                      primeiroItem = value!;
+                      if (value) {
+                        segundoItem = false;
                       }
                     });
                   },
@@ -115,17 +122,17 @@ class _AuthState extends State<Auth> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
               children: [
                 Checkbox(
-                  value: segundoValor,
+                  value: segundoItem,
                   onChanged: (value) {
                     setState(() {
-                      segundoValor = value!;
-                      if (segundoValor) {
+                      segundoItem = value!;
+                      if (segundoItem) {
                         desmarcarPrimeiroCheckbox();
                       }
                     });
@@ -162,20 +169,20 @@ class _AuthState extends State<Auth> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Center(
               child: AnimatedOpacity(
-                opacity: primeiroValor || segundoValor ? 1.0 : 0.0,
-                duration: Duration(milliseconds: 500),
+                opacity: primeiroItem || segundoItem ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 500),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: yellowColor,
                     minimumSize: const Size(double.infinity, 50),
                   ),
                   onPressed: () {
-                    if (primeiroValor && segundoValor) {
+                    if (primeiroItem && segundoItem) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
@@ -184,21 +191,40 @@ class _AuthState extends State<Auth> {
                           backgroundColor: Colors.red,
                         ),
                       );
-                    } else if (primeiroValor) {
-                      // Navegar para a página SMS
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RegisterCodigo(telefone: widget.telefone)),
+                    } else if (primeiroItem) {
+                      registrarUser(
+                        cpf: widget.cpf,
+                        email: widget.email,
+                        telefone: widget.telefone,
+                        tipoValidacao: "sms",
                       );
-                    } else if (segundoValor) {
-                      // Navegar para a página E-MAIL
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => RegisterEmailAuth()),
+                        MaterialPageRoute(
+                          builder: (context) => RegisterCodigo(
+                            telefone: widget.telefone,
+                            cpf: widget.cpf,
+                            email: widget.email,
+                            tipoValidacao: 'sms',
+                          ),
+                        ),
+                      );
+                    } else if (segundoItem) {
+                      registrarUser(
+                        cpf: widget.cpf,
+                        email: widget.email,
+                        telefone: widget.telefone,
+                        tipoValidacao: "email",
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegisterEmailAuth(),
+                        ),
                       );
                     }
                   },
-                  child: Text('Continuar'),
+                  child: const Text('Continuar'),
                 ),
               ),
             )
@@ -210,7 +236,7 @@ class _AuthState extends State<Auth> {
 
   void updateOpacity() {
     setState(() {
-      opacity = (primeiroValor || segundoValor) ? 1.0 : 0.0;
+      opacity = (primeiroItem || segundoItem) ? 1.0 : 0.0;
     });
   }
 }

@@ -5,13 +5,21 @@ import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rmcheckin/app/pages/register/register_dados/register_dados.dart';
 import 'package:rmcheckin/app/pages/register/register_data/register_data.dart';
+import 'package:rmcheckin/app/services/registrar_service.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 
 class RegisterCodigo extends StatefulWidget {
+  final String cpf;
+  final String email;
   final String telefone;
+  final String tipoValidacao;
+
   const RegisterCodigo({
     Key? key,
+    required this.cpf,
+    required this.email,
     required this.telefone,
+    required this.tipoValidacao,
   }) : super(key: key);
 
   @override
@@ -22,7 +30,7 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
   bool isLoading = false;
   bool isCodeComplete = false;
   OtpTimerButtonController controller = OtpTimerButtonController();
-
+  TextEditingController otpController = TextEditingController();
   String maskPhoneNumber(String phoneNumber) {
     // Adiciona o DDD entre parênteses e mantém os dois últimos dígitos visíveis
     return '${phoneNumber.substring(0, 4)} ****' + phoneNumber.substring(phoneNumber.length - 2);
@@ -56,6 +64,12 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
           color: Colors.white,
         ),
         backgroundColor: darkBlueColor,
+        title: Image.asset(
+          'assets/Captura de tela 2023-09-19 181800.png',
+          fit: BoxFit.contain,
+          height: 62,
+        ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -105,7 +119,7 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
             ),
             Pinput(
               length: 6,
-              //defaultPinTheme: defaultPinTheme,
+              controller: otpController,
               focusedPinTheme: focusedPinTheme,
               submittedPinTheme: submittedPinTheme,
               showCursor: true,
@@ -131,7 +145,14 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
                 OtpTimerButton(
                   backgroundColor: yellowColor,
                   controller: controller,
-                  onPressed: () {},
+                  onPressed: () {
+                    // registrarUser(
+                    //   cpf: widget.cpf,
+                    //   email: widget.cpf,
+                    //   telefone: widget.telefone,
+                    //   tipoValidacao: "sms",
+                    // );
+                  },
                   duration: 60,
                   text: Text(
                     'Reenviar codigo',
@@ -166,7 +187,7 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
                       },
                       child: const Text('Continuar'),
                     )
-                  : Container(), // Container vazio quando o código não está completo
+                  : Container(),
             ),
           ],
         ),

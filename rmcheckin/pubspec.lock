@@ -419,6 +419,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
+  flutter_riverpod:
+    dependency: "direct main"
+    description:
+      name: flutter_riverpod
+      sha256: da9591d1f8d5881628ccd5c25c40e74fc3eef50ba45e40c3905a06e1712412d5
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.9"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -773,6 +781,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  pin_input_text_field:
+    dependency: transitive
+    description:
+      name: pin_input_text_field
+      sha256: "8d6fc670aa673a4df5976086f0e8039972a5b2bcb783c8db8dd3b9b4b072ca90"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.5.1"
   pinput:
     dependency: "direct main"
     description:
@@ -845,6 +861,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.1"
+  riverpod:
+    dependency: transitive
+    description:
+      name: riverpod
+      sha256: "942999ee48b899f8a46a860f1e13cee36f2f77609eb54c5b7a669bb20d550b11"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.9"
   rxdart:
     dependency: transitive
     description:
@@ -922,6 +946,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  sms_autofill:
+    dependency: "direct main"
+    description:
+      name: sms_autofill
+      sha256: "2eb159f53ed7d76002d6c15cad99e14dbd5f997f3bb7f9bcad9bd44ba5fcd6c3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
   source_span:
     dependency: transitive
     description:
@@ -962,6 +994,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
+  state_notifier:
+    dependency: transitive
+    description:
+      name: state_notifier
+      sha256: b8677376aa54f2d7c58280d5a007f9e8774f1968d1fb1c096adcb4792fba29bb
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   stream_channel:
     dependency: transitive
     description:
