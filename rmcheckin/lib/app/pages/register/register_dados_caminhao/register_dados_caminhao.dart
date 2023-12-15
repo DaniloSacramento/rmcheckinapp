@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:brasil_fields/brasil_fields.dart';
@@ -6,10 +7,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:rmcheckin/app/pages/register/foto_motorista/foto_motorista.dart';
+import 'package:rmcheckin/app/services/registrar_veiculo_service.dart';
+import 'package:rmcheckin/app/services/tipo_veiculo_service.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 
 class RegisterDadosCaminhao extends StatefulWidget {
-  const RegisterDadosCaminhao({super.key});
+  final String cpf;
+  final String email;
+  final String telefone;
+  final String nome;
+  final String password;
+  const RegisterDadosCaminhao({
+    Key? key,
+    required this.cpf,
+    required this.email,
+    required this.telefone,
+    required this.nome,
+    required this.password,
+  }) : super(key: key);
 
   @override
   State<RegisterDadosCaminhao> createState() => _RegisterDadosCaminhaoState();
@@ -18,14 +33,10 @@ class RegisterDadosCaminhao extends StatefulWidget {
 class _RegisterDadosCaminhaoState extends State<RegisterDadosCaminhao> {
   bool _showPassword = false;
 
-  final TextEditingController nameInputController = TextEditingController();
+  final TextEditingController placaController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
-  TextEditingController confirmarSenha = TextEditingController();
-
-  TextEditingController suaSenha = TextEditingController();
-
+  final ValueNotifier<List<String>> tiposCaminhao = ValueNotifier([]);
   final dropValue = ValueNotifier('');
   final dropOpcoes = ['Caminhao', 'Carro', 'Moto', 'Bicicleta'];
   bool isLoading = false;
@@ -39,6 +50,22 @@ class _RegisterDadosCaminhaoState extends State<RegisterDadosCaminhao> {
         _image = File(pickedFile.path);
       }
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchTiposCaminhao();
+  }
+
+  Future<void> _fetchTiposCaminhao() async {
+    try {
+      final tipos = await TipoVeiculoService().tipoVeiculo();
+      tiposCaminhao.value = tipos as List<String>;
+    } catch (e) {
+      // Trate erros, se necessário
+      print('Erro ao buscar tipos de veículos: $e');
+    }
   }
 
   @override
@@ -90,7 +117,7 @@ class _RegisterDadosCaminhaoState extends State<RegisterDadosCaminhao> {
                   ),
                 ),
                 TextFormField(
-                  controller: nameInputController,
+                  controller: placaController,
                   inputFormatters: [
                     PlacaVeiculoInputFormatter(),
                   ],
@@ -125,20 +152,20 @@ class _RegisterDadosCaminhaoState extends State<RegisterDadosCaminhao> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 2.0, right: 2),
-                  child: ValueListenableBuilder(
-                    valueListenable: dropValue,
-                    builder: (BuildContext context, String value, _) {
+                  child: ValueListenableBuilder<List<String>>(
+                    valueListenable: tiposCaminhao,
+                    builder: (BuildContext context, List<String> tipos, _) {
                       return DropdownButtonFormField<String>(
                         isExpanded: true,
                         hint: const Text("Selecione o tipo veiculo"),
-                        value: (value.isEmpty) ? null : value,
+                        value: dropValue.value.isNotEmpty ? dropValue.value : null,
                         onChanged: (escolha) {
                           dropValue.value = escolha.toString();
                         },
-                        items: dropOpcoes
-                            .map((op) => DropdownMenuItem(
-                                  value: op,
-                                  child: Text(op),
+                        items: tipos
+                            .map((tipo) => DropdownMenuItem(
+                                  value: tipo,
+                                  child: Text(tipo),
                                 ))
                             .toList(),
                       );
@@ -146,46 +173,10 @@ class _RegisterDadosCaminhaoState extends State<RegisterDadosCaminhao> {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 2.0),
-                  child: Text(
-                    'Foto do caminhao',
-                    style: GoogleFonts.dosis(
-                      textStyle: TextStyle(
-                        fontSize: 18,
-                        color: darkBlueColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: darkBlueColor,
-                    minimumSize: const Size(
-                      double.infinity,
-                      50,
-                    ),
-                  ),
-                  onPressed: _getImage,
-                  label: const Text(
-                    'Tirar foto',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  icon: const Icon(
-                    Icons.camera_alt,
-                    color: Colors.white,
-                  ),
+                  height: 0,
                 ),
                 const SizedBox(
-                  height: 200,
+                  height: 150,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 0, right: 0),
@@ -201,10 +192,21 @@ class _RegisterDadosCaminhaoState extends State<RegisterDadosCaminhao> {
                       onPressed: isLoading
                           ? null
                           : () async {
+                              registrarVeiculo(
+                                cpf: widget.cpf,
+                                placa: placaController.text,
+                                tipo: dropValue.value.toString(),
+                              );
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const FotoMotorista(),
+                                  builder: (context) => FotoMotorista(
+                                    cpf: widget.cpf,
+                                    email: widget.email,
+                                    password: widget.password,
+                                    telefone: widget.telefone,
+                                    nome: widget.nome,
+                                  ),
                                 ),
                               );
                             },

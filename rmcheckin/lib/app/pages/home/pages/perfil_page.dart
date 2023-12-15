@@ -79,14 +79,14 @@ class _PerfilPageState extends State<PerfilPage> {
                       width: 170,
                       height: telaHeight * 0.25,
                       child: CachedNetworkImage(
-                        imageUrl: user!.foto,
+                        imageUrl: user?.foto ?? '', // Use a default value if user is null
                         placeholder: (context, url) => const CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Container(
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage('assets/user.png'), // Substitua pelo caminho da imagem padrão desejada
+                              image: AssetImage('assets/user.png'),
                             ),
                           ),
                         ),

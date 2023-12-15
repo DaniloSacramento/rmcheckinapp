@@ -83,12 +83,14 @@ class _AuthState extends State<Auth> {
                 Checkbox(
                   value: primeiroItem,
                   onChanged: (value) {
-                    setState(() {
-                      primeiroItem = value!;
-                      if (value) {
-                        segundoItem = false;
-                      }
-                    });
+                    setState(
+                      () {
+                        primeiroItem = value!;
+                        if (value) {
+                          segundoItem = false;
+                        }
+                      },
+                    );
                   },
                 ),
                 Column(
@@ -181,7 +183,7 @@ class _AuthState extends State<Auth> {
                     backgroundColor: yellowColor,
                     minimumSize: const Size(double.infinity, 50),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (primeiroItem && segundoItem) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
@@ -191,37 +193,51 @@ class _AuthState extends State<Auth> {
                           backgroundColor: Colors.red,
                         ),
                       );
-                    } else if (primeiroItem) {
-                      registrarUser(
-                        cpf: widget.cpf,
-                        email: widget.email,
-                        telefone: widget.telefone,
-                        tipoValidacao: "sms",
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RegisterCodigo(
-                            telefone: widget.telefone,
-                            cpf: widget.cpf,
-                            email: widget.email,
-                            tipoValidacao: 'sms',
-                          ),
-                        ),
-                      );
-                    } else if (segundoItem) {
-                      registrarUser(
-                        cpf: widget.cpf,
-                        email: widget.email,
-                        telefone: widget.telefone,
-                        tipoValidacao: "email",
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RegisterEmailAuth(),
-                        ),
-                      );
+                    } else {
+                      bool apiResponseSuccessful = false;
+                      if (primeiroItem) {
+                        apiResponseSuccessful = await registrarUser(
+                          cpf: widget.cpf,
+                          email: widget.email,
+                          telefone: widget.telefone,
+                          tipoValidacao: "sms",
+                        );
+                        if (apiResponseSuccessful) {
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegisterCodigo(
+                                telefone: widget.telefone,
+                                cpf: widget.cpf,
+                                email: widget.email,
+                                tipoValidacao: 'sms',
+                              ),
+                            ),
+                          );
+                        }
+                      } else if (segundoItem) {
+                        apiResponseSuccessful = await registrarUser(
+                          cpf: widget.cpf,
+                          email: widget.email,
+                          telefone: widget.telefone,
+                          tipoValidacao: "email",
+                        );
+                        if (apiResponseSuccessful) {
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegisterEmailAuth(
+                                telefone: widget.telefone,
+                                cpf: widget.cpf,
+                                email: widget.email,
+                                tipoValidacao: 'email',
+                              ),
+                            ),
+                          );
+                        }
+                      }
                     }
                   },
                   child: const Text('Continuar'),

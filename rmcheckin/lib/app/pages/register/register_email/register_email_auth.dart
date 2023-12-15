@@ -6,8 +6,16 @@ import 'package:rmcheckin/app/pages/register/register_data/register_data.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 
 class RegisterEmailAuth extends StatefulWidget {
+  final String cpf;
+  final String email;
+  final String telefone;
+  final String tipoValidacao;
   RegisterEmailAuth({
     Key? key,
+    required this.cpf,
+    required this.email,
+    required this.telefone,
+    required this.tipoValidacao,
   }) : super(key: key);
 
   @override
@@ -86,7 +94,16 @@ class _RegisterEmailAuthState extends State<RegisterEmailAuth> {
                   onPressed: isLoading
                       ? null
                       : () async {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterData()));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegisterData(
+                                telefone: widget.telefone,
+                                cpf: widget.cpf,
+                                email: widget.email,
+                              ),
+                            ),
+                          );
                         },
                   child: isLoading
                       ? const CircularProgressIndicator() // Mostrar indicador de carregamento

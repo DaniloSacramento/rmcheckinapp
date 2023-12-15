@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 Future<bool> login(
   String email,
   String password,
-  // String telefone,
 ) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   var url = Uri.parse(ConstsApi.motoristaAuth);
@@ -20,9 +19,6 @@ Future<bool> login(
     body: jsonEncode(<String, String>{
       'email': email,
       'password': password,
-      // 'telefone': telefone,
-      // 'cpf': cpf,
-      // 'telefone': telefone,
     }),
   );
   print(response.body);

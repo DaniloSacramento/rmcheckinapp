@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:rmcheckin/app/const/const.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-Future<bool> registrarUser({
+Future<bool> finalizarRegistro({
+  required String nome,
   required String cpf,
   required String email,
+  required String password,
   required String telefone,
-  required String tipoValidacao,
 }) async {
-  var url = Uri.parse(ConstsApi.registrarUser);
+  var url = Uri.parse(ConstsApi.finalizarRegistro);
   var response = await http.post(
     url,
     headers: <String, String>{
@@ -22,7 +22,8 @@ Future<bool> registrarUser({
         'email': email,
         'cpf': cpf,
         'telefone': telefone,
-        'tipoValidacao': tipoValidacao,
+        'nome': nome,
+        'password': password,
       },
     ),
   );

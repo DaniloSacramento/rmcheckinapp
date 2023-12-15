@@ -38,8 +38,8 @@ class VeiculoRedeCard extends StatelessWidget {
                           backgroundImage: NetworkImage(veiculo.foto),
                         )
                       else
-                        const Icon(Icons.image), // Ícone padrão se não houver foto
-                      const SizedBox(width: 16), // Espaço entre a foto e o texto
+                        const Icon(Icons.image),
+                      const SizedBox(width: 16),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

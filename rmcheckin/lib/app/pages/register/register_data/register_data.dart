@@ -1,10 +1,20 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rmcheckin/app/pages/register/register_dados_caminhao/register_dados_caminhao.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 
 class RegisterData extends StatefulWidget {
-  const RegisterData({super.key});
+  final String cpf;
+  final String email;
+  final String telefone;
+
+  const RegisterData({
+    Key? key,
+    required this.cpf,
+    required this.email,
+    required this.telefone,
+  }) : super(key: key);
 
   @override
   State<RegisterData> createState() => _RegisterDataState();
@@ -241,7 +251,13 @@ class _RegisterDataState extends State<RegisterData> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const RegisterDadosCaminhao(),
+                                builder: (context) => RegisterDadosCaminhao(
+                                  cpf: widget.cpf,
+                                  password: suaSenha.text,
+                                  nome: nameInputController.text,
+                                  telefone: widget.telefone,
+                                  email: widget.email,
+                                ),
                               ),
                             );
                           },

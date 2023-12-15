@@ -48,15 +48,15 @@ class _InputScreenState extends State<InputScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MyPhone(),
+                        builder: (context) => const MyPhone(),
                       ),
                     );
                   },
-                  child: Text('Quero me cadastrar'),
+                  child: const Text('Quero me cadastrar'),
                 ),
               ),
               SizedBox(
-                height: telaHeight * 0.015,
+                height: telaHeight * 0.01,
               ),
               Center(
                 child: ElevatedButton(

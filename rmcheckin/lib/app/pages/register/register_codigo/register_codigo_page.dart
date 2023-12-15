@@ -1,11 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rmcheckin/app/pages/register/register_dados/register_dados.dart';
 import 'package:rmcheckin/app/pages/register/register_data/register_data.dart';
 import 'package:rmcheckin/app/services/registrar_service.dart';
+import 'package:rmcheckin/app/services/verificar_token_service.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 
 class RegisterCodigo extends StatefulWidget {
@@ -145,14 +147,7 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
                 OtpTimerButton(
                   backgroundColor: yellowColor,
                   controller: controller,
-                  onPressed: () {
-                    // registrarUser(
-                    //   cpf: widget.cpf,
-                    //   email: widget.cpf,
-                    //   telefone: widget.telefone,
-                    //   tipoValidacao: "sms",
-                    // );
-                  },
+                  onPressed: () {},
                   duration: 60,
                   text: Text(
                     'Reenviar codigo',
@@ -177,13 +172,40 @@ class _RegisterCodigoState extends State<RegisterCodigo> {
                         backgroundColor: yellowColor,
                         minimumSize: const Size(double.infinity, 50),
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterData(),
-                          ),
-                        );
+                      onPressed: () async {
+                        try {
+                          final apiResponse = await VerificarTokenService().verificarToken(widget.telefone, otpController.text);
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegisterData(
+                                cpf: widget.cpf,
+                                email: widget.email,
+                                telefone: widget.telefone,
+                              ),
+                            ),
+                          );
+                        } catch (e) {
+                          // ignore: use_build_context_synchronously
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(
+                                  'Código Inválido',
+                                  style: GoogleFonts.dosis(
+                                    textStyle: const TextStyle(
+                                      fontSize: 17,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }
                       },
                       child: const Text('Continuar'),
                     )
