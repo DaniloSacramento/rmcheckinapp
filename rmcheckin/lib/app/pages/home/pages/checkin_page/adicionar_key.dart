@@ -1,45 +1,17 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rmcheckin/app/pages/home/pages/checkin_page/iniciar_checkin_page.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../models/motorista_auth_model.dart';
-
-class CheckinPage extends StatefulWidget {
-  const CheckinPage({super.key});
+class AdicionarKey extends StatefulWidget {
+  const AdicionarKey({super.key});
 
   @override
-  State<CheckinPage> createState() => _CheckinPageState();
+  State<AdicionarKey> createState() => _AdicionarKeyState();
 }
 
-class _CheckinPageState extends State<CheckinPage> {
-  Motorista? user;
-  motoristaUser() async {
-    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    final result = sharedPreferences.getString("data");
-    setState(() {
-      user = Motorista.fromMap(jsonDecode(result!)["data"]);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
-        motoristaUser();
-      },
-    );
-  }
-
+class _AdicionarKeyState extends State<AdicionarKey> {
   @override
   Widget build(BuildContext context) {
-    String nomeCompleto = user!.nome;
-    List<String> partesDoNome = nomeCompleto.split(' ');
-    String primeiroNome = partesDoNome.isNotEmpty ? partesDoNome[0] : '';
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -59,76 +31,89 @@ class _CheckinPageState extends State<CheckinPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              'Leitura de Chave de NF:',
+              style: GoogleFonts.dosis(
+                textStyle: TextStyle(color: darkBlueColor, fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Olá, $primeiroNome',
-                  style: GoogleFonts.dosis(
-                    textStyle: TextStyle(fontSize: 26, color: darkBlueColor, fontWeight: FontWeight.bold),
+                Expanded(
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    cursorColor: Colors.black,
+                    decoration: InputDecoration(
+                      hintText: "Adicione a Chave da NF ",
+                      filled: true,
+                      fillColor: Colors.grey[300],
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                          12.0,
+                        ),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
                   ),
                 ),
-                const Text(
-                  'Checkin em 19/12/2023',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                IconButton(
+                  icon: Icon(Icons.camera_alt),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.search), // Replace 'icon2' with the actual icon you want to use
+                  onPressed: () {
+                    // Add your logic for the second icon here
+                  },
                 ),
               ],
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: yellowColor,
-              ),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => IniciarCheckin()));
-              },
-              child: Text(
-                'Iniciar um novo Checkin',
-                style: GoogleFonts.dosis(
-                  textStyle: TextStyle(fontSize: 18, color: darkBlueColor, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            const SizedBox(
+            SizedBox(
               height: 40,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Loja',
+                      'Nota',
                       style: GoogleFonts.dosis(
                         textStyle: TextStyle(fontSize: 18, color: darkBlueColor, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    const Text('Recife'),
+                    const Text('322234'),
                   ],
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Checkin',
-                        style: GoogleFonts.dosis(
-                          textStyle: TextStyle(fontSize: 18, color: darkBlueColor, fontWeight: FontWeight.bold),
-                        )),
-                    const Text('KKK-0099'),
+                    Text(
+                      'Forcenedor',
+                      style: GoogleFonts.dosis(
+                        textStyle: TextStyle(fontSize: 18, color: darkBlueColor, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const Text('BRF'),
                   ],
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Data',
-                        style: GoogleFonts.dosis(
-                          textStyle: TextStyle(fontSize: 18, color: darkBlueColor, fontWeight: FontWeight.bold),
-                        )),
-                    const Text('19/12/2023\nas 11:30'),
+                    Text(
+                      'Categoria',
+                      style: GoogleFonts.dosis(
+                        textStyle: TextStyle(fontSize: 18, color: darkBlueColor, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const Text('Pescados'),
                   ],
                 ),
                 Column(
@@ -139,13 +124,39 @@ class _CheckinPageState extends State<CheckinPage> {
                         style: GoogleFonts.dosis(
                           textStyle: TextStyle(fontSize: 18, color: darkBlueColor, fontWeight: FontWeight.bold),
                         )),
-                    const Text('Aguardando\nAutorizacao de entrada'),
+                    const Text('Aguardando\nAutorizacao\nde entrada'),
                   ],
-                )
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
+            const SizedBox(
+              height: 40,
+            ),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: yellowColor,
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                onPressed: () {},
+                child: const Text('Finalizar'),
+              ),
+            ),
             SizedBox(
-              height: 380,
+              height: 300,
             ),
             Expanded(
               child: Padding(

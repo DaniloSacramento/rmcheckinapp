@@ -36,7 +36,7 @@ class _InputScreenState extends State<InputScreen> {
               ),
               Image.asset("assets/foto1tela.jpeg"),
               SizedBox(
-                height: telaHeight * 0.18,
+                height: telaHeight * 0.16,
               ),
               Center(
                 child: ElevatedButton(
