@@ -7,7 +7,6 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:rmcheckin/app/pages/login/login_page.dart';
 import 'package:rmcheckin/app/pages/register/sucesso_cadastro/sucesso_cadastro.dart';
 import 'package:rmcheckin/app/services/upload_foto.service.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
@@ -38,13 +37,12 @@ class _FotoMotoristaState extends State<FotoMotorista> {
 
   pick(ImageSource source) async {
     try {
-      final XFile? image = await _imagePicker.pickImage(
-        source: source,
-      );
+      final XFile? image = await _imagePicker.pickImage(source: source);
       if (image != null) {
         imageFile = File(image.path);
 
         if (imageFile!.existsSync()) {
+          // Continue com a compressão da imagem
           final compressedImageBytes = await FlutterImageCompress.compressWithFile(
             imageFile!.path,
             quality: 85,
@@ -55,7 +53,11 @@ class _FotoMotoristaState extends State<FotoMotorista> {
           }
 
           setState(() {});
+        } else {
+          print('Arquivo de imagem não encontrado');
         }
+      } else {
+        print('Nenhuma imagem selecionada');
       }
       final respostaAPI = await Cadastrarfoto().cadastrarfotoPromotor(cpf: widget.cpf, file: imageBytes!);
       if (respostaAPI != null) {
@@ -172,7 +174,21 @@ class _FotoMotoristaState extends State<FotoMotorista> {
                   ),
                 ),
               ),
-            )
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SucessoPageCadastro(
+                                cpf: widget.cpf,
+                                password: widget.password,
+                                nome: widget.nome,
+                                telefone: widget.telefone,
+                                email: widget.email,
+                              )));
+                },
+                child: Text('a'))
           ],
         ),
       ),

@@ -89,8 +89,8 @@ class _SelecionarVeiculoState extends State<SelecionarVeiculo> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0),
                   child: Text(''),
                 )
               ],
@@ -133,8 +133,8 @@ class _SelecionarVeiculoState extends State<SelecionarVeiculo> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0),
                   child: Text(''),
                 )
               ],
@@ -142,6 +142,7 @@ class _SelecionarVeiculoState extends State<SelecionarVeiculo> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                const Icon(Icons.add),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: yellowColor,

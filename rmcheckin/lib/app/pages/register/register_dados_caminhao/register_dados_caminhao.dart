@@ -197,6 +197,7 @@ class _RegisterDadosCaminhaoState extends State<RegisterDadosCaminhao> {
                                 placa: placaController.text,
                                 tipo: dropValue.value.toString(),
                               );
+                              TipoVeiculoService().tipoVeiculo();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

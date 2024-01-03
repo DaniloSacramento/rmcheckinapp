@@ -1,8 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rmcheckin/app/const/const.dart';
+import 'package:rmcheckin/app/models/tipo_veiculo.dart';
+import 'package:http/http.dart' as http;
 import 'package:rmcheckin/app/pages/home/pages/checkin_page/iniciar_checkin_page.dart';
+import 'package:rmcheckin/app/services/lojas_checkin.dart';
 import 'package:rmcheckin/app/widget/app_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -80,7 +85,7 @@ class _CheckinPageState extends State<CheckinPage> {
                 backgroundColor: yellowColor,
               ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => IniciarCheckin()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const IniciarCheckin()));
               },
               child: Text(
                 'Iniciar um novo Checkin',
@@ -139,17 +144,20 @@ class _CheckinPageState extends State<CheckinPage> {
                         style: GoogleFonts.dosis(
                           textStyle: TextStyle(fontSize: 18, color: darkBlueColor, fontWeight: FontWeight.bold),
                         )),
-                    const Text('Aguardando\nAutorizacao de entrada'),
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    )
                   ],
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 380,
             ),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.only(top: 0, bottom: 0),
+                padding: const EdgeInsets.only(top: 0, bottom: 0),
                 child: Card(
                   elevation: 10,
                   child: ListView(scrollDirection: Axis.horizontal, children: const [
@@ -161,7 +169,7 @@ class _CheckinPageState extends State<CheckinPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(Icons.exit_to_app, color: Colors.red),
+                            Icon(Icons.timer_sharp, color: Colors.red),
                             Text(
                               'Aguardando\nValidacao das\nNF-es',
                               style: TextStyle(color: Colors.red),
@@ -173,7 +181,7 @@ class _CheckinPageState extends State<CheckinPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(
-                              Icons.exit_to_app,
+                              Icons.device_hub_outlined,
                               color: Colors.blue,
                             ),
                             Text(
@@ -187,7 +195,7 @@ class _CheckinPageState extends State<CheckinPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(
-                              Icons.exit_to_app,
+                              Icons.check,
                               color: Colors.green,
                             ),
                             Text(
@@ -200,7 +208,10 @@ class _CheckinPageState extends State<CheckinPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(Icons.exit_to_app),
+                            Icon(
+                              Icons.fire_truck_outlined,
+                              color: Colors.black,
+                            ),
                             Text('Veiculo no Patio'),
                           ],
                         ),
